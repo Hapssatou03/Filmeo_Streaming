@@ -1,0 +1,40 @@
+<main th:fragment="content">
+    <h1>Inscription</h1>
+    <div class="d-flex justify-content-center">
+        <form method="post" th:object="${user}" >
+            <div class="d-flex flex-column">
+                <div class="col form-group">
+                    <label for="pseudo">Peudo</label>
+                    <input type="text" name="pseudo" class="form-control" th:class="${'form-control' + (#fields.hasErrors('pseudo') ? ' is-invalid' : '')}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('pseudo')}" th:errors="*{pseudo}"></div>
+                </div>
+    
+                <div class="col form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" th:class="${'form-control' + (#fields.hasErrors('email') ? ' is-invalid' : '')}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+        
+        
+                <div class="col form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="text" name="password" class="form-control" th:class="${'form-control' + (#fields.hasErrors('password') ? ' is-invalid' : '')}">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+            </div>
+        
+        
+            <!-- BOUTONS -->
+            <div class="d-flex mt-5 justify-content-between">
+                <button  class="btn btn-success">
+                    <i class="fa fa-save"></i> Envoyer
+                </button>
+        
+                <button onclick="history.back()" class="btn btn-danger">
+                    <i class="fa fa-reply"></i> Annuler
+                </button>
+            </div>
+        </form>
+        </div>  
+    </main>
+    

@@ -1,0 +1,59 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" th:fragment="menu">
+  <div class="container-fluid">
+    <!-- Logo ou nom du site -->
+    <a class="navbar-brand" href="#">FILMEO</a>
+
+    <!-- Bouton de menu pour les écrans mobiles -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenu de la barre de navigation -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Liens de navigation -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Films</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Émissions télévisées</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Artistes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Plus</a>
+        </li>
+      </ul>
+
+      <!-- Section de connexion et inscription -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <th:block sec:authorize="!isAuthenticated()">
+          <li class="nav-item">
+            <a class="nav-link" href="/connexion">Connexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary" href="/inscription">Rejoindre FILMEO</a>
+          </li>
+        </th:block>
+        <th:block sec:authorize="isAuthenticated()">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><span th:text="${#authentication.name}"></span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/deconnexion">Déconnexion</a>
+          </li>
+        </th:block>
+      </ul>
+    </div>
+  </div>
+</nav>

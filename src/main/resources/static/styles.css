@@ -1,0 +1,110 @@
+body {
+  background-color: #0f0f0f;
+  color: #c0ddfa;
+}
+/* styles.css */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    font-size: 1.1rem;
+    margin-right: 15px;
+  }
+  
+  .nav-link.btn {
+    padding: 5px 15px;
+    border-radius: 20px;
+  }
+  
+  .bg-primary {
+    background-color: #0d6efd !important; /* Couleur primaire Bootstrap */
+  }
+  
+  .input-group {
+    max-width: 600px;
+  }
+  
+  .input-group .form-control {
+    border-radius: 20px 0 0 20px;
+  }
+  
+  .input-group .btn {
+    border-radius: 0 20px 20px 0;
+  }
+  
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)),
+    url("/api/placeholder/1920/1080");
+  background-size: cover;
+  background-position: center;
+  padding: 6rem 0;
+  margin-bottom: 2rem;
+}
+
+.movie-card {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.movie-card:hover {
+  transform: translateY(-10px);
+}
+
+.movie-card img {
+  transition: transform 0.5s ease;
+}
+
+.movie-card:hover img {
+  transform: scale(1.05);
+}
+
+.category-card {
+  transition: all 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  background-color: #f8f9fa;
+}
+
+.horizontal-card {
+  transition: transform 0.3s ease;
+}
+
+.horizontal-card:hover {
+  transform: translateY(-5px);
+}
+
+.card {
+  transition: transform 0.2s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn-primary {
+  align-self: flex-start;
+}
+
+iframe {
+  border-radius: 10px;
+}

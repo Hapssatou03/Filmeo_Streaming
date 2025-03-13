@@ -1,0 +1,27 @@
+<div th:fragment="dashboard">
+    <h1>Bonjour, <span th:text="${user.pseudo}">Pseudo</span> !</h1>
+  
+
+        <hr>
+        <!-- Liste des favoris -->
+        <h2>Mes films favoris</h2>
+        <ul class="list-group">
+            <li class="list-group-item" th:each="film : ${favoris}">
+                <span th:text="${film.titre}">Titre du film</span>
+                <form th:action="@{/dashboard/removeFilm}" method="post" class="float-end">
+                    <input type="hidden" name="filmId" th:value="${film.id}" />
+                    <button class="btn btn-danger btn-sm" type="submit">Supprimer</button>
+                </form>
+            </li>
+        </ul>
+        <!-- Formulaire d'ajout d'un film -->
+        <form th:action="@{/dashboard/addFilm}" method="post" class="mt-3">
+            <div class="mb-3">
+                <label for="filmId" class="form-label">ID du film à ajouter :</label>
+                <input type="number" class="form-control" id="filmId" name="filmId" required />
+            </div>
+            <button class="btn btn-primary" type="submit">Ajouter</button>
+        </form>
+    </main>
+</div>
+

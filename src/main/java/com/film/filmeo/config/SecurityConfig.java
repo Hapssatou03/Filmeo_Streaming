@@ -47,10 +47,10 @@ SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Except
         .csrf(csrf -> csrf.disable()) // Désactivation de CSRF
         .formLogin(form -> form
             .loginPage("/connexion")
-            .loginProcessingUrl("/connexion")
-            .defaultSuccessUrl("/", false) // false = Redirection vers la page demandée avant connexion
+            .loginProcessingUrl("/processLogin")
+            .defaultSuccessUrl("/dashboard", true) 
             .permitAll()
-        )
+            )
         .logout(logout -> logout
             .logoutUrl("/deconnexion")
             .logoutSuccessUrl("/")

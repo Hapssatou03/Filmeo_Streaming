@@ -8,5 +8,6 @@ import com.film.filmeo.model.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     public User findByPseudo(String pseudo);
+    
 
 }

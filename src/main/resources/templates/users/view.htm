@@ -1,0 +1,8 @@
+<div th:fragment="content">
+    <h2>Détails de l'utilisateur</h2>
+    <p>ID : <span th:text="${user.id}"></span></p>
+    <p>Pseudo : <span th:text="${user.pseudo}"></span></p>
+    <p>Email : <span th:text="${user.email}"></span></p>
+    <!-- Ajoute d'autres champs si nécessaire -->
+
+    <a th:href="@{/users}" class="btn btn-primary">Retour à la liste</a>

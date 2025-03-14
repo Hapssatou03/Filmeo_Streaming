@@ -15,6 +15,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Entity
@@ -28,7 +29,12 @@ public class Film {
     private String titre;
     private String nationalite;
     private String dateSortie;
+
+    @NotNull(message = "La note est obligatoire")
     private Double note;
+
+    //  afficheUrl
+    private String afficheUrl;
 
     // Relation ManyToMany avec User
     @ManyToMany(mappedBy = "films")

@@ -29,23 +29,25 @@ public class DashboardController {
     // Page principale du dashboard
     @GetMapping
     public String showDashboard(Model model, Principal principal) {
-        // Récupère l'utilisateur connecté
-        String Pseudo = principal.getName();
-
-        User user = userRepository.findByPseudo(Pseudo);
+        if (principal == null) {
+            // Si l'utilisateur n'est pas authentifié, redirige vers la page de connexion.
+            return "redirect:/connexion";
+        }
+        String pseudo = principal.getName();
+    
+        // Utilisation du fetch join pour charger l'utilisateur avec ses films
+        User user = userRepository.findByPseudoWithFilms(pseudo);
         if (user == null) {
             throw new RuntimeException("Utilisateur introuvable");
-            
         }
-               
-
-        // Récupère les films favoris
+    
+        // La collection 'films' est déjà chargée
         Set<Film> favoris = user.getFilms();
-
+    
         model.addAttribute("user", user);
         model.addAttribute("favoris", favoris);
-
-        return "dashboard"; // => dashboard.html
+        model.addAttribute("content", "dashboard");  // Indique que le fragment dashboard doit être inclus
+        return "base";  // On retourne le layout de base
     }
 
     // Ajouter un film aux favoris
@@ -55,16 +57,15 @@ public class DashboardController {
         User user = userRepository.findByPseudo(pseudo);
         if (user == null) {
             throw new RuntimeException("Utilisateur introuvable");
-            
         }
-
+    
         Film film = filmRepository.findById(filmId)
                 .orElseThrow(() -> new RuntimeException("Film introuvable"));
-
+    
         // Ajout du film dans le set
         user.getFilms().add(film);
         userRepository.save(user);
-
+    
         return "redirect:/dashboard";
     }
 
@@ -75,16 +76,15 @@ public class DashboardController {
         User user = userRepository.findByPseudo(pseudo);
         if (user == null) {
             throw new RuntimeException("Utilisateur introuvable");
-            
         }
-
+    
         Film film = filmRepository.findById(filmId)
                 .orElseThrow(() -> new RuntimeException("Film introuvable"));
-
+    
         // Retrait du film
         user.getFilms().remove(film);
         userRepository.save(user);
-
+    
         return "redirect:/dashboard";
     }
 }

@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 
 @Controller
 public class SecurityController { 
-       @Autowired
+    @Autowired
     private UserService userService;
 
     @Autowired

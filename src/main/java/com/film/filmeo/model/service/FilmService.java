@@ -18,7 +18,8 @@ public class FilmService {
     }
 
     public Film getOne(Long id) {
-        return filmRepository.findById(id).orElse(null);
+        return filmRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Film introuvable avec id " + id));
     }
 
     public Film insert(Film film) {

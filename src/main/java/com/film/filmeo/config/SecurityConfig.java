@@ -24,45 +24,45 @@ public class SecurityConfig {
     }
 
     @Bean
-AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-    AuthenticationManagerBuilder authenticationManagerBuilder = 
-        httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-    
-    authenticationManagerBuilder
-        .userDetailsService(connectedUserService)
-        .passwordEncoder(passwordEncoder());
+    AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = 
+            httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+        
+        authenticationManagerBuilder
+            .userDetailsService(connectedUserService)
+            .passwordEncoder(passwordEncoder());
 
-    return authenticationManagerBuilder.build();
-}
+        return authenticationManagerBuilder.build();
+    }
 
-@Bean
-SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity
-        .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/admin/**").hasRole("ADMIN") // Accessible uniquement aux ADMIN
-            .requestMatchers("/mod/**").hasAnyRole("ADMIN", "MODERATOR") // Accessible aux ADMIN et MODERATOR
-            .requestMatchers("/watcher/**").hasRole("USER") // Accessible aux USER
-            .anyRequest().permitAll() // Toutes les autres routes sont publiques
-        )
-        .csrf(csrf -> csrf.disable()) // Désactivation de CSRF
-        .formLogin(form -> form
-            .loginPage("/connexion")
-            .loginProcessingUrl("/processLogin")
-            .defaultSuccessUrl("/dashboard", true) 
-            .permitAll()
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/mod/**").hasAnyRole("ADMIN", "MODERATOR")
+                .requestMatchers("/watcher/**").hasRole("USER")
+                .requestMatchers("/dashboard/**").authenticated()  // Protéger l'espace personnel
+                .anyRequest().permitAll()
             )
-        .logout(logout -> logout
-            .logoutUrl("/deconnexion")
-            .logoutSuccessUrl("/")
-            .invalidateHttpSession(true) // la session utilisateur n'est plus valide 
-            .deleteCookies("JSESSIONID") //supprime le cookie de session du client
-            .permitAll()
-        )
-        .sessionManagement(session -> session
-            .maximumSessions(1) // Une seule session active par utilisateur
-        );
+            .csrf(csrf -> csrf.disable())
+            .formLogin(form -> form
+                .loginPage("/connexion")
+                .loginProcessingUrl("/processLogin")
+                .defaultSuccessUrl("/dashboard", true)
+                .permitAll()
+            )
+            .logout(logout -> logout
+                .logoutUrl("/deconnexion")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+            )
+            .sessionManagement(session -> session
+                .maximumSessions(1)
+            );
 
-    return httpSecurity.build();
-}
-
+        return httpSecurity.build();
+    }
 }

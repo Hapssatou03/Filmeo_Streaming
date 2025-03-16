@@ -1,0 +1,70 @@
+<main th:fragment="content">
+    <div class="my-4">
+        <h2 th:text="${film.id == null} ? 'Ajouter un film' : 'Modifier le film'"></h2>
+
+        <form th:action="@{${film.id == null} ? '/films/new' : '/films/' + ${film.id} + '/edit'}"
+              th:object="${film}" method="post" enctype="multipart/form-data">
+
+            <!-- Titre -->
+            <div class="mb-3">
+                <label class="form-label">Titre</label>
+                <input type="text" class="form-control" th:field="*{titre}" required>
+            </div>
+
+            <!-- Nationalité -->
+            <div class="mb-3">
+                <label class="form-label">Nationalité</label>
+                <input class="form-control" type="text" th:field="*{nationalite}">
+            </div>
+
+            <!-- Date de sortie -->
+            <div class="mb-3">
+                <label class="form-label">Date de sortie</label>
+                <input type="date" class="form-control" th:field="*{dateSortie}">
+            </div>
+
+            <!-- Durée -->
+            <div class="mb-3">
+                <label class="form-label">Durée</label>
+                <input type="text" class="form-control" th:field="*{duree}" placeholder="ex : 1h45">
+            </div>
+
+            <!-- Synopsis -->
+            <div class="mb-3">
+                <label class="form-label">Synopsis</label>
+                <textarea class="form-control" rows="4" th:field="*{synopsis}"></textarea>
+            </div>
+
+            <!-- Note -->
+            <div class="mb-3">
+                <label class="form-label">Note (/10)</label>
+                <input type="number" step="0.1" min="0" max="10" class="form-control" th:field="*{note}">
+            </div>
+
+            <!-- Réalisateur (sélection via une liste déroulante) -->
+            <div class="mb-3">
+                <label class="form-label">Réalisateur</label>
+                <select class="form-control" th:field="*{realisateur.id}">
+                    <option value="">-- Choisir réalisateur --</option>
+                    <option th:each="pers : ${personnages}" 
+                            th:value="${perso.id}" 
+                            th:text="${perso.nom} + ' ' + ${perso.prenom}">
+                    </option>
+                </select>
+            </div>
+
+            <!-- Affiche URL -->
+            <div class="mb-3">
+                <label class="form-label">URL de l'affiche</label>
+                <input type="text" class="form-control" th:field="*{afficheUrl}">
+            </div>
+
+            <!-- Bouton sauvegarde -->
+            <button class="btn btn-success" type="submit">
+                <i class="fa-solid fa-save"></i> Enregistrer
+            </button>
+
+            <a class="btn btn-secondary" th:href="@{/films}">Annuler</a>
+        </form>
+    </div>
+</main>

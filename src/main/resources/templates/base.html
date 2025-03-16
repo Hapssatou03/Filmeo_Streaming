@@ -13,16 +13,11 @@
 </head>
 <body class="container-fluid">
     <nav th:insert="_partials/menu :: menu"></nav>
-    <main th:replace="~{${content} :: content}"></main>
-    
+    <!-- <main th:replace="~{${content} :: content}"></main> -->
+    <main th:if="${content != null}" th:replace="~{${content} :: content}"></main>
+
     <!-- dashboard-content -->
 
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <p>&copy; 2023 FILMEO. Tous droits réservés.</p>
-        <p>
-          <a href="#" class="text-white">Politique de confidentialité</a> | 
-          <a href="#" class="text-white">Conditions d'utilisation</a>
-        </p>
-    </footer>
+   
 </body>
 </html>

@@ -1,0 +1,41 @@
+<main th:fragment="content">
+    <div class="my-4">
+        <h2 class="mb-3" th:text="${film.titre}"></h2>
+
+        <div class="row">
+            <div class="col-md-4">
+                <img class="img-fluid rounded" th:src="${film.afficheUrl}" alt="Affiche film">
+            </div>
+            <div class="col-md-8">
+                <p><strong>Nationalité :</strong> <span th:text="${film.nationalite}"></span></p>
+                <p><strong>Date de sortie :</strong> <span th:text="${film.dateSortie}"></span></p>
+                <p><strong>Durée :</strong> <span th:text="${film.duree}"></span></p>
+                <p><strong>Réalisateur :</strong>
+                    <span th:text="${film.realisateur.nom} + ' ' + ${film.realisateur.prenom}"></span>
+                </p>
+                <p><strong>Note :</strong> <span th:text="${film.note}"></span>/10</p>
+
+                <h5>Synopsis :</h5>
+                <p th:text="${film.synopsis}"></p>
+
+                <h5>Acteurs :</h5>
+                <ul>
+                    <li th:each="acteur : ${film.acteurs}"
+                        th:text="${acteur.nom} + ' ' + ${acteur.prenom}">
+                    </ul>
+
+                <h5>Genres :</h5>
+                <ul>
+                    <li th:each="genre : ${film.genres}" th:text="${genre.nom}"></li>
+                </ul>
+
+                <a class="btn btn-warning mt-3" th:href="@{/films/{id}/edit(id=${film.id})}">
+                    <i class="fa-solid fa-edit"></i> Modifier
+                </a>
+                <a class="btn btn-secondary mt-3" th:href="@{/films}">
+                    Retour à la liste
+                </a>
+            </div>
+        </div>
+    </div>
+</main>

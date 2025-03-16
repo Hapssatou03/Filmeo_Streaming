@@ -13,4 +13,18 @@ public class HomeController {
 mav.addObject("content", "home/index");
 return mav;
     }
+// route pour la
+
+@GetMapping("Films/home")
+public ModelAndView filmsHome() {
+    ModelAndView mav = new ModelAndView("base");
+    mav.addObject("content", "/home");
+    return mav;
 }
+
+
+
+
+}
+
+

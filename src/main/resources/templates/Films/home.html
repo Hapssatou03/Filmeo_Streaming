@@ -1,0 +1,17 @@
+<main th:fragment="content">
+    <section class="container my-5 text-center">
+        <h2 class="display-4">Gestion des films  🎬</h2>
+        <p class="lead my-4">Gérez facilement votre collection de films </p>
+  
+        <div class="d-flex gap-3 justify-content-center">
+            <a class="btn btn-primary btn-lg" th:href="@{/films/new}">
+                <i class="fa-solid fa-plus"></i> Ajouter un film
+            </a>
+  
+            <a class="btn btn-secondary btn-lg" th:href="@{/films}">
+                <i class="fa-solid fa-list"></i> Voir la liste des films
+            </a>
+        </div>
+    </section>
+  </main>
+  

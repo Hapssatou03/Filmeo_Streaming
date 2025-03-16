@@ -1,0 +1,39 @@
+<main th:fragment="content" class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="text-primary">🎭 Liste des Personnages</h2>
+        <a th:href="@{/personnages/new}" class="btn btn-success">
+            <i class="fa fa-plus"></i> Ajouter un personnage
+        </a>
+    </div>
+
+    <table class="table table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="personnage : ${personnages}">
+                <td th:text="${personnage.id}"></td>
+                <td th:text="${personnage.nom}"></td>
+                <td th:text="${personnage.prenom}"></td>
+                <td>
+                    <a th:href="@{/personnages/{id}(id=${personnage.id})}" class="btn btn-info btn-sm">
+                        <i class="fa fa-eye"></i> Voir
+                    </a>
+                    <a th:href="@{/personnages/{id}/edit(id=${personnage.id})}" class="btn btn-warning btn-sm">
+                        <i class="fa fa-edit"></i> Modifier
+                    </a>
+                    <form th:action="@{/personnages/{id}/delete(id=${personnage.id})}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i> Supprimer
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</main>

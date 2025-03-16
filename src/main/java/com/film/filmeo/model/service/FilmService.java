@@ -26,11 +26,15 @@ public class FilmService {
         return filmRepository.save(film);
     }
 
-    public Film update(Film film) {
+    public Film update(Long id, Film filmDetails) {
+        Film film = getOne(id); // validation de l'existence du film
+        film.setTitre(film.getTitre());
+        film.setSynopsis(film.getSynopsis());
         return filmRepository.save(film);
     }
 
     public void delete(Long id) {
-        filmRepository.deleteById(id);
+        Film film = getOne(id);
+        filmRepository.delete(film);
     }
 }

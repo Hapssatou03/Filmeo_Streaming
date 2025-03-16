@@ -1,0 +1,31 @@
+<main th:fragment="content" class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 th:text="${personnage.nom} + ' ' + ${personnage.prenom}"></h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Date de naissance :</strong> <span th:text="${personnage.dateNaissance}"></span></p>
+            <p><strong>Décès :</strong> <span th:text="${personnage.deces != null ? personnage.deces : 'Toujours vivant'}"></span></p>
+            <p><strong>Nationalité :</strong> <span th:text="${personnage.nationalite}"></span></p>
+            <p><strong>Biographie :</strong> <span th:text="${personnage.biographie}"></span></p>
+            <p><strong>Sexe :</strong> <span th:text="${personnage.sexe}"></span></p>
+            <p><strong>Métier :</strong> <span th:text="${personnage.metier}"></span></p>
+            <p><strong>Photo :</strong></p>
+            <img th:if="${personnage.photoUrl != null}" th:src="@{${personnage.photoUrl}}" class="img-thumbnail" alt="Photo du personnage" width="200px">
+
+            <div class="mt-3">
+                <a th:href="@{/personnages/{id}/edit(id=${personnage.id})}" class="btn btn-warning">
+                    <i class="fa fa-edit"></i> Modifier
+                </a>
+                <a th:href="@{/personnages}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Retour à la liste
+                </a>
+                <form th:action="@{/personnages/{id}/delete(id=${personnage.id})}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Supprimer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

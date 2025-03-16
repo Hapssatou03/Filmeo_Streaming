@@ -1,20 +1,15 @@
 package com.film.filmeo.controller;
 
+import com.film.filmeo.model.entity.Film;
+import com.film.filmeo.model.service.FilmService;
+import com.film.filmeo.model.service.PersonnagesService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import com.film.filmeo.model.entity.Film;
-import com.film.filmeo.model.service.FilmService;
-
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/films")
@@ -23,53 +18,77 @@ public class FilmController {
     @Autowired
     private FilmService filmService;
 
-    // Afficher tous les films
-    @GetMapping
-    public String listFilms(Model model) {
-        model.addAttribute("films", filmService.getAll());
-        return "films/list"; // src/main/resources/templates/films/list.html
+    @Autowired
+    private PersonnagesService personnagesService;
+
+    // Page d'accueil stylisée avec boutons
+    @GetMapping("/home")
+    public ModelAndView filmsHome() {
+        ModelAndView mav = new ModelAndView("base");
+        mav.addObject("content", "Films/home");
+        return mav;
     }
 
-    // Afficher le formulaire de création d'un film
+    // Afficher tous les films
+    @GetMapping
+    public ModelAndView listFilms() {
+        ModelAndView mav = new ModelAndView("base");
+        mav.addObject("films", filmService.getAll());
+        mav.addObject("content", "Films/list");
+        return mav;
+    }
+
+    // Afficher formulaire de création d'un film
     @GetMapping("/new")
-    public String createFilmForm(Model model) {
-        model.addAttribute("film", new Film());
-        return "films/new";// src/main/resources/templates/films/new.html
+    public ModelAndView createFilmForm() {
+        ModelAndView mav = new ModelAndView("base");
+        mav.addObject("film", new Film());
+        mav.addObject("personnages", personnagesService.getAll());
+        mav.addObject("content", "Films/form");
+        return mav;
     }
 
     // Créer un nouveau film
-      @PostMapping("/new")
-    public String createFilm(@Valid @ModelAttribute Film film, BindingResult bindingResult, Model model) {
+    @PostMapping("/new")
+    public ModelAndView createFilm(@Valid @ModelAttribute Film film, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "films/form";
+            ModelAndView mav = new ModelAndView("base");
+            mav.addObject("personnages", personnagesService.getAll());
+            mav.addObject("content", "Films/form");
+            return mav;
         }
         filmService.insert(film);
-        return "redirect:/films";
+        return new ModelAndView("redirect:/films");
     }
 
-    // Afficher les détails d'un film
+    // Afficher détails d'un film
     @GetMapping("/{id}")
-    public String getFilm(@PathVariable Long id, Model model) {
-        model.addAttribute("film", filmService.getOne(id));
-        return "films/view";// src/main/resources/templates/films/view.html
+    public ModelAndView getFilm(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView("base");
+        mav.addObject("film", filmService.getOne(id));
+        mav.addObject("content", "Films/view");
+        return mav;
     }
 
-    // Afficher le formulaire de modification d'un film
+    // Afficher formulaire modification
     @GetMapping("/{id}/edit")
-    public String editFilmForm(@PathVariable Long id, Model model) {
-        model.addAttribute("film", filmService.getOne(id));
-        return "films/edit"; // réutilisation du même formulaire pour création et modification
+    public ModelAndView editFilmForm(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView("base");
+        mav.addObject("film", filmService.getOne(id));
+        mav.addObject("personnages", personnagesService.getAll());
+        mav.addObject("content", "Films/form");
+        return mav;
     }
 
     // Mettre à jour un film
     @PostMapping("/{id}/edit")
-    public String updateFilm(@PathVariable Long id, @Valid @ModelAttribute Film film, BindingResult bindingResult) {
+    public String updateFilm(@PathVariable Long id, @Valid @ModelAttribute Film film, BindingResult bindingResult,
+                             Model model) {
         if (bindingResult.hasErrors()) {
-            return "films/form";
+            model.addAttribute("personnages", personnagesService.getAll());
+            return "Films/form";
         }
-        //ID
-        film.setId(id);
-        filmService.update(film);
+        filmService.update(id, film);
         return "redirect:/films";
     }
 
